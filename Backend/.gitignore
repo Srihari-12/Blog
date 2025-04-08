@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# VSCode settings
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Python environment files
+*.env
+.env
+
+
+
+# Logs and local artifacts
+*.log
+
+# Test coverage
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Redis dump files (if any)
+dump.rdb
