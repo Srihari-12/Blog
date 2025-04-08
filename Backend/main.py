@@ -1,18 +1,27 @@
 from fastapi import FastAPI
-from Backend.api.v1_endpoints import otp
-from Backend.config.db import engine
-from Backend.models import user_model
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-import os
 
-# Load environment variables
+from Backend.config.db import engine
+from Backend.models import user_model, blog_model
+from Backend.api.v1_endpoints import otp, blog
+
 load_dotenv()
 
-
-
-# Create DB tables
+# Create database tables
 user_model.Base.metadata.create_all(bind=engine)
+blog_model.Base.metadata.create_all(bind=engine)
 
-# Initialize app
 app = FastAPI()
-app.include_router(otp.router, prefix="/api/v1", tags=["OTP"])
+
+# Enable CORS (you can restrict origins later)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Register routers
+app.include_router(otp.router, prefix="/api/v1", tags=["Auth"])
+app.include_router(blog.router, prefix="/api/v1", tags=["Blog"])
